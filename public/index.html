@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FIFA World Cup 2026 Smart Stadium Assistant. Navigate seating, search parking, view schedules, check crowd density, and chat with Gemini AI.">
+  <title>FIFA World Cup 2026 - Smart Stadium Assistant</title>
+  
+  <!-- Preconnect to Google Fonts for performance loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Deferred JavaScript files for optimized execution -->
+  <script defer src="js/api.js"></script>
+  <script defer src="js/state.js"></script>
+  <script defer src="js/ui.js"></script>
+  <script defer src="js/navigation.js"></script>
+  <script defer src="js/services.js"></script>
+  <script defer src="js/emergency.js"></script>
+  <script defer src="js/accessibility.js"></script>
+  <script defer src="js/crowd.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+
+  <!-- Skip Navigation Link for Keyboard Accessibility (WCAG 2.1 AA) -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Initial Page Loading Splash Screen Overlay -->
+  <div id="page-loader" class="page-loader-overlay">
+    <div class="loader-content">
+      <div class="loader-logo" aria-hidden="true">🏆</div>
+      <div class="loader-spinner"></div>
+      <h2 class="loader-text">FIFA World Cup 2026</h2>
+      <p class="loader-subtext">Initializing Stadium Nexus Telemetry...</p>
+    </div>
+  </div>
+
+  <!-- Screen Reader Hidden Announcer (A11y ARIA Live Region) -->
+  <div id="sr-announcer" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
+  <div id="sr-announcement-region" class="sr-only" role="status" aria-live="polite"></div>
+
+  <!-- Modern Glassmorphic Sticky Header & Navbar -->
+  <header class="app-header" role="banner">
+    <nav class="navbar" aria-label="Main Navigation" role="navigation">
+      <div class="nav-logo">
+        <span class="logo-emoji" aria-hidden="true">🏆</span>
+        <div class="logo-text">
+          <span class="logo-title">FIFA 2026</span>
+          <span class="logo-subtitle">Stadium Nexus</span>
+        </div>
+      </div>
+      
+      <!-- Desktop Navigation Menu -->
+      <ul class="nav-menu" role="menubar">
+        <li role="none"><a href="#hero" class="nav-link active" role="menuitem">Home</a></li>
+        <li role="none"><a href="#seat-finder" class="nav-link" role="menuitem">Navigation</a></li>
+        <li role="none"><a href="#ai-chatbot" class="nav-link" role="menuitem">AI Chat</a></li>
+        <li role="none"><a href="#concessions" class="nav-link" role="menuitem">Food AI</a></li>
+        <li role="none"><a href="#itinerary-planner" class="nav-link" role="menuitem">Itinerary</a></li>
+        <li role="none"><a href="#weather-advisory" class="nav-link" role="menuitem">Weather</a></li>
+        <li role="none"><a href="#parking" class="nav-link" role="menuitem">Parking</a></li>
+        <li role="none"><a href="#emergency" class="nav-link" role="menuitem">Emergency</a></li>
+      </ul>
+
+      <!-- Accessibility & Settings Panel -->
+      <div class="nav-settings">
+        <!-- Font Scaling Selector -->
+        <div class="setting-group" aria-label="Font adjustment controls">
+          <button id="btn-font-decrease" class="btn-setting" aria-label="Decrease Font Size" title="Decrease Font Size">A-</button>
+          <button id="btn-font-reset" class="btn-setting" aria-label="Reset Font Size" title="Reset Font Size">A</button>
+          <button id="btn-font-increase" class="btn-setting" aria-label="Increase Font Size" title="Increase Font Size">A+</button>
+        </div>
+
+        <!-- High Contrast Mode Toggle -->
+        <button id="btn-contrast-toggle" class="btn-setting btn-contrast" aria-label="Toggle High Contrast Mode" title="Toggle High Contrast Mode">
+          <span aria-hidden="true">◑</span>
+        </button>
+
+        <!-- Language Selector -->
+        <div class="language-dropdown-wrapper">
+          <select id="lang-selector" class="lang-selector" aria-label="Select Language" id="host-lang-select">
+            <option value="en">English (EN)</option>
+            <option value="es">Español (ES)</option>
+            <option value="fr">Français (FR)</option>
+            <option value="ar">العربية (AR)</option>
+          </select>
+        </div>
+
+        <!-- Sticky SOS Trigger Button -->
+        <button id="btn-sos-trigger" class="btn-sos" aria-label="Emergency SOS Help Center" title="Trigger SOS Alert">
+          <span class="sos-icon" aria-hidden="true">🚨</span> SOS
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main id="main-content" role="main">
+    
+    <!-- 1. Immersive Hero Section -->
+    <section id="hero" class="hero-section">
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-container">
+        <h1 class="hero-title" id="hero-title-main">MetLife Stadium Intelligent Nexus</h1>
+        <p class="hero-subtitle" id="hero-desc-main">Your multi-agent companion for the FIFA World Cup 2026. Real-time crowd telemetry, multi-factor smart routes, Gemini personalized dining, zero-hallucination emergency safety, and accessibility support.</p>
+        <div class="hero-ctas">
+          <a href="#seat-finder" class="btn-cta btn-primary" id="hero-cta-seat">Intelligent Navigation</a>
+          <a href="#ai-chatbot" class="btn-cta btn-secondary" id="hero-cta-ai">Ask Goalie AI</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Services Dashboard Grid -->
+    <section id="services" class="services-section container">
+      <h2 class="section-title" id="title-services">Smart Stadium Services</h2>
+      <div class="services-grid">
+        <!-- Card 1: Navigation -->
+        <a href="#seat-finder" class="service-card" role="button" aria-labelledby="card-title-seat">
+          <div class="card-icon" aria-hidden="true">🗺️</div>
+          <h3 id="card-title-seat">Smart Navigation</h3>
+          <p id="card-desc-seat">Multi-factor routes considering gate, seat, weather, accessibility, and crowd density.</p>
+          <span class="card-action" aria-hidden="true">Calculate Route →</span>
+        </a>
+        <!-- Card 2: AI Assistant -->
+        <a href="#ai-chatbot" class="service-card" role="button" aria-labelledby="card-title-chat">
+          <div class="card-icon" aria-hidden="true">💬</div>
+          <h3 id="card-title-chat">Goalie AI Assistant</h3>
+          <p id="card-desc-chat">Multilingual support with intent, urgency, frustration, and reasoning intelligence.</p>
+          <span class="card-action" aria-hidden="true">Chat Now →</span>
+        </a>
+        <!-- Card 3: Food AI -->
+        <a href="#concessions" class="service-card" role="button" aria-labelledby="card-title-food">
+          <div class="card-icon" aria-hidden="true">🍔</div>
+          <h3 id="card-title-food">Gemini Food Finder</h3>
+          <p id="card-desc-food">Personalized dining recommendations tailored to seat, budget, vegan & allergen safety.</p>
+          <span class="card-action" aria-hidden="true">Find Dining →</span>
+        </a>
+        <!-- Card 4: Matchday Itinerary -->
+        <a href="#itinerary-planner" class="service-card" role="button" aria-labelledby="card-title-itinerary">
+          <div class="card-icon" aria-hidden="true">📅</div>
+          <h3 id="card-title-itinerary">AI Matchday Itinerary</h3>
+          <p id="card-desc-itinerary">8-step timeline (Arrival, Gate, Dining, Halftime, Exit) optimized for crowd avoidance.</p>
+          <span class="card-action" aria-hidden="true">Generate Plan →</span>
+        </a>
+        <!-- Card 5: Weather Advisory -->
+        <a href="#weather-advisory" class="service-card" role="button" aria-labelledby="card-title-weather">
+          <div class="card-icon" aria-hidden="true">🌤️</div>
+          <h3 id="card-title-weather">Weather Intelligence</h3>
+          <p id="card-desc-weather">Rain-safe covered entries, indoor lounges, clothing tips, and heat wave hydration alerts.</p>
+          <span class="card-action" aria-hidden="true">View Advisory →</span>
+        </a>
+        <!-- Card 6: Emergency support -->
+        <a href="#emergency" class="service-card service-card-danger" role="button" aria-labelledby="card-title-emergency">
+          <div class="card-icon" aria-hidden="true">🚨</div>
+          <h3 id="card-title-emergency">Emergency & Safety</h3>
+          <p id="card-desc-emergency">Zero-hallucination medical dispatch, verified First Aid, lost child lounge, and exit routing.</p>
+          <span class="card-action" aria-hidden="true">Emergency Support →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 3. Stadium Map & Multi-Factor Intelligent Navigation -->
+    <section id="seat-finder" class="map-section container section-panel">
+      <h2 class="section-title" id="title-seat-finder">Intelligent Navigation & Seat Finder</h2>
+      
+      <div class="map-grid">
+        <!-- Interactive Multi-Factor Navigation Controls -->
+        <div class="map-controls glass-panel">
+          <h3 id="control-panel-header">🎯 Calculate Intelligent Route</h3>
+          <p class="panel-desc">Recommends routes based on Gate, Seat Number, Crowd Density, Accessibility, Weather, Walking Distance, Elderly Visitors, and Families with Children.</p>
+          
+          <form id="smart-nav-form" class="search-form" novalidate style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label for="nav-gate-select" style="font-size: 0.8rem; font-weight: 600;">Starting Gate:</label>
+                <select id="nav-gate-select" class="form-input">
+                  <option value="Gate A">Gate A (North Plaza)</option>
+                  <option value="Gate B">Gate B (East Stand - Congested)</option>
+                  <option value="Gate C">Gate C (South Transit Hub)</option>
+                  <option value="Gate D">Gate D (West Fast Track)</option>
+                </select>
+              </div>
+              <div>
+                <label for="seat-sec-input" style="font-size: 0.8rem; font-weight: 600;">Section Number:</label>
+                <input type="text" id="seat-sec-input" value="104" placeholder="e.g. 104" class="form-input">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label for="seat-row-input" style="font-size: 0.8rem; font-weight: 600;">Row:</label>
+                <input type="text" id="seat-row-input" value="12" placeholder="e.g. 12" class="form-input">
+              </div>
+              <div>
+                <label for="seat-num-input" style="font-size: 0.8rem; font-weight: 600;">Seat Number:</label>
+                <input type="text" id="seat-num-input" value="8" placeholder="e.g. 8" class="form-input">
+              </div>
+            </div>
+
+            <div>
+              <label for="nav-weather-select" style="font-size: 0.8rem; font-weight: 600;">Weather Condition:</label>
+              <select id="nav-weather-select" class="form-input">
+                <option value="sunny">Sunny & Warm (Clear Promenade)</option>
+                <option value="rainy">Heavy Rain (Indoor Covered Route)</option>
+                <option value="extreme_heat">Extreme Heat Wave (Air-Conditioned Lounge)</option>
+                <option value="cold_windy">Cold & High Wind (Heated Enclosure)</option>
+              </select>
+            </div>
+
+            <!-- Checkbox Multi-Factor Controls -->
+            <div style="display: flex; flex-direction: column; gap: 6px; background: rgba(0, 0, 0, 0.2); padding: 10px; border-radius: 6px;">
+              <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; cursor: pointer;">
+                <input type="checkbox" id="nav-wheelchair-check">
+                <span>♿ Wheelchair / Step-Free Ramp & Elevator</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; cursor: pointer;">
+                <input type="checkbox" id="nav-elderly-check">
+                <span>👵 Elderly Visitor (Resting Benches & Low Exertion)</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; cursor: pointer;">
+                <input type="checkbox" id="nav-family-check">
+                <span>👶 Family with Children (Wide Stroller Lanes & Quiet Rooms)</span>
+              </label>
+            </div>
+
+            <button type="button" id="find-seat-btn" class="btn-action">Find Intelligent Smart Route 🚀</button>
+          </form>
+
+          <!-- Turn-by-Turn Route Instructions Container -->
+          <div id="nav-route-instructions" style="margin-top: 16px;"></div>
+
+          <!-- AI Explanation Rationale Card -->
+          <div id="ai-route-explanation-card" class="glass-card" style="margin-top: 14px; padding: 16px; border-left: 4px solid var(--accent-emerald); display: none;">
+            <h4 style="color: var(--accent-emerald); font-size: 0.95rem; margin-bottom: 8px;">
+              🤖 AI Route Selection Rationale & Rationale
+            </h4>
+            <div id="ai-explanation-text" style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;"></div>
+          </div>
+        </div>
+
+        <!-- 2D Canvas Pitch & Interactive Seating SVG Map -->
+        <div class="map-visualization glass-panel">
+          <div style="margin-bottom: 10px;">
+            <h3 style="font-size: 1.05rem; color: var(--accent-gold);">🏟️ Stadium 2D Interactive Pitch Map</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">Animated route paths, gate turnstiles, section target pins, and real-time gate occupancy colors.</p>
+          </div>
+
+          <canvas id="stadium-canvas" width="400" height="300" style="width: 100%; height: 260px; background: #040812; border-radius: 8px; border: 1px solid var(--glass-border);"></canvas>
+
+          <div style="margin-top: 12px; font-size: 0.82rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>🟢 Gate A: 4m wait</span>
+            <span>🔴 Gate B: 35m delay</span>
+            <span>🟢 Gate C: 4m wait</span>
+            <span>🔵 Gate D: 2m wait</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Gemini AI Personalized Food Finder -->
+    <section id="concessions" class="concessions-section container section-panel">
+      <h2 class="section-title" id="title-food-panel">Gemini AI Personalized Food Finder</h2>
+      
+      <div class="concessions-layout">
+        <!-- Interactive Food Filter Controls -->
+        <div class="concessions-tips glass-panel">
+          <h3>🍔 Personalized Concessions Engine</h3>
+          <p>Filters stalls by seat section, budget, dietary restrictions, child friendliness, and shortest queue times.</p>
+          
+          <form id="food-filter-form" style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+            <div>
+              <label for="food-sec-input" style="font-size: 0.8rem; font-weight: 600;">Your Seat Section:</label>
+              <input type="text" id="food-sec-input" value="104" class="form-input">
+            </div>
+
+            <div>
+              <label for="food-budget-input" style="font-size: 0.8rem; font-weight: 600;">Max Budget ($):</label>
+              <input type="number" id="food-budget-input" value="15" step="1" class="form-input">
+            </div>
+
+            <!-- Dietary Checkboxes -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: rgba(0, 0, 0, 0.2); padding: 8px; border-radius: 6px;">
+              <label style="font-size: 0.82rem; display: flex; align-items: center; gap: 6px;">
+                <input type="checkbox" id="food-veg-check"> 🌱 Vegetarian
+              </label>
+              <label style="font-size: 0.82rem; display: flex; align-items: center; gap: 6px;">
+                <input type="checkbox" id="food-vegan-check"> 🥗 100% Vegan
+              </label>
+              <label style="font-size: 0.82rem; display: flex; align-items: center; gap: 6px;">
+                <input type="checkbox" id="food-gf-check"> 🌾 Gluten-Free
+              </label>
+              <label style="font-size: 0.82rem; display: flex; align-items: center; gap: 6px;">
+                <input type="checkbox" id="food-nut-check"> 🥜 Nut-Free
+              </label>
+              <label style="font-size: 0.82rem; display: flex; align-items: center; gap: 6px; grid-column: 1/-1;">
+                <input type="checkbox" id="food-kids-check"> 👶 Junior Kid-Friendly Combo
+              </label>
+            </div>
+
+            <button type="button" id="btn-recommend-food" class="btn-action">Find Personalized Dining 🍔</button>
+          </form>
+
+          <!-- Gemini Food Rationale Card -->
+          <div id="ai-food-recommendation-box" style="margin-top: 14px; display: none;"></div>
+        </div>
+
+        <!-- Food Stalls Grid -->
+        <div id="food-stalls-grid" class="food-grid">
+          <!-- Food stalls loaded dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. AI Matchday Itinerary Planner -->
+    <section id="itinerary-planner" class="itinerary-section container section-panel">
+      <h2 class="section-title" id="title-itinerary-panel">📅 AI Matchday Itinerary Planner</h2>
+      
+      <div class="glass-panel" style="padding: 24px;">
+        <p class="panel-desc">Generates a complete personalized timeline (Arrival Time, Parking, Gate, Food, Shopping, Seat Arrival, Halftime Plan, Exit Strategy) optimized for convenience and crowd avoidance.</p>
+        
+        <form id="itinerary-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px;">
+          <div>
+            <label for="itin-sec-input" style="font-size: 0.8rem; font-weight: 600;">Your Seat Section:</label>
+            <input type="text" id="itin-sec-input" value="104" class="form-input">
+          </div>
+
+          <div>
+            <label for="itin-party-select" style="font-size: 0.8rem; font-weight: 600;">Party Group Type:</label>
+            <select id="itin-party-select" class="form-input">
+              <option value="FAMILY">Family with Children (Strollers & Rest Rooms)</option>
+              <option value="SOLO">Solo Football Fan (Fast-Track Flow)</option>
+              <option value="SENIOR">Senior Visitors (Low Exertion & Shuttles)</option>
+              <option value="VIP">VIP Hospitality Guest</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="itin-kickoff-select" style="font-size: 0.8rem; font-weight: 600;">Match Kickoff Time:</label>
+            <select id="itin-kickoff-select" class="form-input">
+              <option value="18:00">18:00 EST (Evening Match)</option>
+              <option value="21:00">21:00 EST (Night Match)</option>
+              <option value="15:00">15:00 EST (Afternoon Match)</option>
+            </select>
+          </div>
+
+          <div style="grid-column: 1/-1;">
+            <button type="button" id="btn-generate-itinerary" class="btn-action" style="width: 100%;">Generate Complete Matchday Itinerary 📅</button>
+          </div>
+        </form>
+
+        <!-- Itinerary Output Timeline Box -->
+        <div id="itinerary-result-box" style="margin-top: 20px; display: none;"></div>
+      </div>
+    </section>
+
+    <!-- 6. Weather Intelligence Advisory -->
+    <section id="weather-advisory" class="weather-section container section-panel">
+      <h2 class="section-title" id="title-weather-panel">🌤️ Weather Intelligence & Safety Advisory</h2>
+      
+      <div class="glass-panel" style="padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <div>
+            <h3 style="font-size: 1.15rem; color: var(--accent-gold);" id="weather-condition-heading">Sunny / Extreme Heat Warning (31°C)</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Real-time weather telemetry and AI climate-protection advisories for MetLife Stadium.</p>
+          </div>
+          <span class="status-pill live" id="weather-alert-pill">🌡️ Heat Alert Active</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 14px;">
+          <div class="glass-card" style="padding: 16px;">
+            <h4 style="color: var(--accent-cyan); font-size: 0.92rem;">🏢 Indoor Waiting Lounges</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 6px;" id="weather-indoor-lounges">Concourse 200 Air-Conditioned Club Lounge & Section 215 Quiet Cooling Center</p>
+          </div>
+
+          <div class="glass-card" style="padding: 16px;">
+            <h4 style="color: var(--accent-emerald); font-size: 0.92rem;">☔ Rain-Safe Covered Entrances</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 6px;" id="weather-rain-entrances">Gate A Covered Ramp & Gate D West Tunnel Entry (Shielded from storm rain)</p>
+          </div>
+
+          <div class="glass-card" style="padding: 16px;">
+            <h4 style="color: var(--accent-gold); font-size: 0.92rem;">🧢 Recommended Matchday Attire</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 6px;" id="weather-clothing-tips">Lightweight breathable cotton shirt, sun cap, and UV-blocking sunglasses</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px; background: rgba(0, 229, 255, 0.05); padding: 14px; border-radius: 6px; border-left: 4px solid var(--accent-cyan);">
+          <h4 style="font-size: 0.88rem; color: var(--accent-cyan); font-weight: 700;">💧 Free Hydration Station Portals:</h4>
+          <p style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 4px;">Chilled water refill stations are active outside Portals 104, 214, and 330. Bring reusable empty containers to refill free of charge.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Live Crowd Density & Gate Telemetry -->
+    <section id="crowd-telemetry" class="crowd-section container section-panel">
+      <h2 class="section-title" id="title-crowd-telemetry">Live Crowd Density & Predictive Telemetry</h2>
+      
+      <div class="crowd-telemetry-grid">
+        <!-- Gate telemetry displays -->
+        <div class="gate-status-column glass-panel">
+          <h3 id="subtitle-gate-status">🚪 Entrance Gate Traffic</h3>
+          <div class="gate-metrics-list" id="gate-metrics-container">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+
+        <!-- AI Predictive Crowd Analytics Engine -->
+        <div class="crowd-rec-column glass-panel">
+          <h3>🤖 AI Crowd Predictor Engine</h3>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 10px;">Simulates future congestion curves using match timing, gate popularity, and parking occupancy.</p>
+          
+          <form id="predict-crowd-form" style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div>
+                <label style="font-size: 0.75rem; font-weight: 600;">Match Timing:</label>
+                <select id="predict-timing-select" class="form-input" style="padding: 6px;">
+                  <option value="T-60">T-60 Mins (Peak Arrival)</option>
+                  <option value="T-15">T-15 Mins (Anthem Rush)</option>
+                  <option value="T-120">T-120 Mins (Early Open)</option>
+                  <option value="POST_MATCH">Post-Match (Final Whistle Egress)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 0.75rem; font-weight: 600;">Gate:</label>
+                <select id="predict-gate-select" class="form-input" style="padding: 6px;">
+                  <option value="Gate B">Gate B (East Stand)</option>
+                  <option value="Gate A">Gate A (North Stand)</option>
+                  <option value="Gate C">Gate C (South Stand)</option>
+                  <option value="Gate D">Gate D (West Stand)</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label style="font-size: 0.75rem; font-weight: 600;">Parking Deck Occupancy (%):</label>
+              <input type="number" id="predict-parking-input" value="85" class="form-input" style="padding: 6px;">
+            </div>
+
+            <button type="button" id="btn-predict-crowd" class="btn-action" style="padding: 8px;">Simulate Predictive Congestion 📊</button>
+          </form>
+
+          <div id="crowd-prediction-result-box" style="margin-top: 12px; display: none;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. AI Chatbot Interface -->
+    <section id="ai-chatbot" class="chat-section container section-panel">
+      <h2 class="section-title" id="title-chat-panel">Goalie AI Assistant (Gemini 1.5 Flash Powered)</h2>
+      <div class="chat-layout glass-panel">
+        
+        <!-- Chat Area Wrapper -->
+        <div class="chat-messages-container">
+          <div class="message system-msg" role="log">
+            <span class="avatar">🤖</span>
+            <div class="message-content">
+              <strong>Goalie AI Assistant</strong>
+              <p>Hello! Welcome to MetLife Stadium for the FIFA World Cup 2026. I am powered by Gemini AI with multi-turn session memory, intent detection, and multi-signal reasoning. Ask me about seat navigation, food recommendations, emergency protocols, weather advisories, or matchday itineraries!</p>
+            </div>
+          </div>
+          <div id="chat-conversation" class="chat-log" role="log" aria-label="Conversation log">
+            <!-- Messages added dynamically -->
+          </div>
+        </div>
+
+        <!-- Suggestion Chips for Fast Entry -->
+        <div class="chat-chips-wrapper">
+          <span class="chips-label" id="lbl-quick-questions">Frequently Asked Questions:</span>
+          <div class="chips-list" role="group" aria-label="Quick stadium helper questions">
+            <button class="chat-chip" aria-label="Where is Gate A?">Where is Gate A?</button>
+            <button class="chat-chip" aria-label="How do I reach Seat B12?">How do I reach Seat B12?</button>
+            <button class="chat-chip" aria-label="Where is the nearest washroom?">Where is the nearest washroom?</button>
+            <button class="chat-chip" aria-label="Where can I park?">Where can I park?</button>
+            <button class="chat-chip" aria-label="Suggest a food stall with a short line">Suggest food stalls with short lines</button>
+            <button class="chat-chip-danger" aria-label="SOS Medical Support">🚨 SOS Medical Support</button>
+          </div>
+        </div>
+
+        <!-- Chat Input Form -->
+        <form id="chat-input-form" class="chat-input-form" autocomplete="off" novalidate>
+          <div class="chat-field-wrapper">
+            <input type="text" id="chat-message-input" placeholder="Type your question here (e.g. 'Where is the nearest medical center?')" aria-label="Type your message to the AI Assistant" aria-required="true">
+            <button type="submit" id="btn-chat-send" class="btn-chat-send" aria-label="Send message">Send 🚀</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 9. Accessibility & Family AI Assistant Panel -->
+    <section id="accessibility-info" class="accessibility-info-section container section-panel">
+      <h2 class="section-title" id="title-a11y-services">Accessibility & Family AI Assistant</h2>
+      
+      <div class="glass-panel" style="padding: 24px;">
+        <p class="panel-desc">Select your fan profile below to generate personalized step-by-step routes, audio/visual accommodations, baby care rooms, and facility guidance.</p>
+        
+        <!-- Profile Switcher Buttons -->
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px;">
+          <button class="a11y-profile-btn active" data-profile="WHEELCHAIR">♿ Wheelchair Mobility</button>
+          <button class="a11y-profile-btn" data-profile="ELDERLY">👵 Senior / Low Exertion</button>
+          <button class="a11y-profile-btn" data-profile="VISUAL">👁️ Visually Impaired (TTS)</button>
+          <button class="a11y-profile-btn" data-profile="HEARING">🦻 Hearing Impaired (Captions)</button>
+          <button class="a11y-profile-btn" data-profile="STROLLER">👶 Families with Strollers</button>
+        </div>
+
+        <!-- AI Personalized Plan Output Card -->
+        <div id="ai-accessibility-plan-card" style="margin-top: 18px; background: rgba(0, 0, 0, 0.25); padding: 18px; border-radius: 8px; border-left: 4px solid var(--accent-emerald);"></div>
+      </div>
+    </section>
+
+    <!-- 10. Dynamic Parking & Transit Tracker -->
+    <section id="parking" class="parking-section container section-panel">
+      <h2 class="section-title" id="title-parking-panel">Smart Parking & Transit</h2>
+      <div id="parking-lots-grid" class="parking-grid">
+        <!-- Loaded dynamically -->
+      </div>
+    </section>
+
+    <!-- 11. Dedicated Emergency & Help Center -->
+    <section id="emergency" class="emergency-section container section-panel">
+      <h2 class="section-title text-danger" id="title-emergency-section">Emergency Safety & SOS Center</h2>
+      <div class="emergency-layout glass-panel border-danger">
+        <div class="emergency-contacts-panel">
+          <h3>🚨 Instant Security Contacts</h3>
+          <p>If you face a security hazard or medical emergency, contact staff immediately. Tap any number to call:</p>
+          <div class="contacts-grid" id="emergency-contacts-list">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+
+        <div class="emergency-guidelines-panel">
+          <h3>📌 Zero-Hallucination Event Safety Instructions</h3>
+          <div class="safety-accordion" id="emergency-instructions-accordion">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+
+        <!-- Lost & Found Registry -->
+        <div class="lost-found-panel">
+          <h3 id="title-lost-found">🔍 Lost & Found Registry & Lost Child Reunion</h3>
+          <p id="desc-lost-found-summary">Main office is located at **Gate A (North Concourse)**. Lost children are escorted to FIFA Guest Services Lounge at Gate A.</p>
+          <div class="lost-found-items-list" id="lost-found-items-container">
+            <div class="lost-item-card" tabindex="0" aria-label="Black leather wallet. Status: Claimed.">
+              <span class="lost-item-name">💼 Black leather wallet</span>
+              <span class="badge badge-success">Claimed</span>
+            </div>
+            <div class="lost-item-card" tabindex="0" aria-label="Set of keys with FIFA keychain. Status: Unclaimed.">
+              <span class="lost-item-name">🔑 Set of keys (FIFA chain)</span>
+              <span class="badge badge-danger">Unclaimed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Full-Screen Interactive SOS Emergency Panic Modal (Traps Focus, Highest Z-Index) -->
+  <div id="sos-modal" class="sos-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="sos-modal-title">
+    <div class="sos-modal-content" tabIndex="-1" id="sos-modal-focus-target">
+      <header class="sos-modal-header">
+        <h2 id="sos-modal-title" class="text-danger">🚨 EMERGENCY SOS PROTOCOL</h2>
+        <button id="btn-close-sos" class="btn-close-modal" aria-label="Close Emergency SOS Dialog">&times;</button>
+      </header>
+      
+      <div class="sos-modal-body">
+        <div class="sos-alert-banner">
+          <h3>STADIUM DISPATCH NOTIFIED</h3>
+          <p>Your current seat location and sector coordinates have been pinged to the Stadium Security Command Center. ETA: 1-2 minutes.</p>
+        </div>
+
+        <!-- Nearest Rescue Info -->
+        <div class="sos-nearest-grid">
+          <div class="sos-info-card">
+            <h4>🏥 Nearest First Aid Station:</h4>
+            <p id="sos-nearest-medical">First Aid Station 1 (Section 128 - Lower Level)</p>
+          </div>
+          <div class="sos-info-card">
+            <h4>👮 Nearest Security Desk:</h4>
+            <p id="sos-nearest-security">Security Post East (Behind Section 110)</p>
+          </div>
+        </div>
+
+        <!-- Evacuation Route Details -->
+        <div class="sos-evacuation-details">
+          <h4>🚶 Emergency Exit Guidelines:</h4>
+          <ol class="sos-steps">
+            <li>Remain calm and watch overhead emergency LED exit panels.</li>
+            <li>Proceed immediately to Gate D West Fast-Track Exit (marked with green arrow signs). Do not use elevators during fires.</li>
+            <li>Follow security wardens wearing high-visibility yellow jackets.</li>
+          </ol>
+        </div>
+
+        <!-- SOS Quick Actions -->
+        <div class="sos-actions">
+          <a href="tel:+18005557233" class="btn-sos-call btn-security-call">📞 Call Security Direct (+1 800-555-SAFE)</a>
+          <a href="tel:+18005556331" class="btn-sos-call btn-medical-call">📞 Call Medical Dispatch (+1 800-555-MED1)</a>
+        </div>
+      </div>
+      
+      <footer class="sos-modal-footer">
+        <button id="btn-dismiss-sos-footer" class="btn-action">Dismiss SOS Overlay</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer" role="contentinfo">
+    <div class="footer-container container">
+      <div class="footer-col">
+        <h4>FIFA World Cup 2026</h4>
+        <p>Smart Stadium Assistant (MetLife Stadium host app). Supporting accessibility, safety, multi-agent navigation, and AI matchday planning.</p>
+        <div class="stadium-connection-status" aria-live="polite">
+          <span class="status-dot online"></span> <span id="lbl-status-connected">Connected to Stadium Telemetry Sensors</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#seat-finder">Navigation</a></li>
+          <li><a href="#ai-chatbot">Goalie AI Chat</a></li>
+          <li><a href="#concessions">Food Finder</a></li>
+          <li><a href="#itinerary-planner">Matchday Itinerary</a></li>
+          <li><a href="#emergency">Emergency Center</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Accessibility Pledge</h4>
+        <p>Conforms to W3C WCAG 2.1 level AA standards. Compatible with screen readers, keyboard navigation, and high contrast adapters.</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-content">
+        <p>&copy; 2026 FIFA World Cup Organising Committee. Developed for MetLife Stadium.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

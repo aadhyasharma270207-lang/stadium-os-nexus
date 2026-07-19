@@ -1,0 +1,92 @@
+[
+  {
+    "id": "metlife",
+    "name": "MetLife Stadium (Final Venue)",
+    "city": "New York / New Jersey",
+    "country": "USA",
+    "capacity": 82500,
+    "image": "metlife_stadium.png",
+    "coordinates": { "lat": 40.8136, "lng": -74.0744 },
+    "gates": [
+      { "name": "Gate A (MetLife Gate)", "status": "Low Crowd", "waitTime": "5 mins", "accessible": true },
+      { "name": "Gate B (Verizon Gate)", "status": "Moderate Crowd", "waitTime": "12 mins", "accessible": true },
+      { "name": "Gate C (Pepsi Gate)", "status": "High Crowd", "waitTime": "20 mins", "accessible": true },
+      { "name": "Gate D (Bud Light Gate)", "status": "Low Crowd", "waitTime": "4 mins", "accessible": true }
+    ],
+    "zones": [
+      { "section": "100 Level Lower", "gates": ["Gate A", "Gate D"], "restrooms": ["104", "118", "135"], "firstAid": "Section 128" },
+      { "section": "200 Level Club", "gates": ["Gate B"], "restrooms": ["208", "225"], "firstAid": "Section 214" },
+      { "section": "300 Level Upper", "gates": ["Gate C", "Gate D"], "restrooms": ["305", "322", "340"], "firstAid": "Section 330" }
+    ],
+    "services": {
+      "wifi": "FIFA2026_MetLife_FreeWiFi",
+      "sensoryRooms": ["Section 215 (Quiet Lounge)"],
+      "wheelchairLifts": ["Elevators 1-8 near Gates A & B"]
+    }
+  },
+  {
+    "id": "azteca",
+    "name": "Estadio Azteca (Opening Match Venue)",
+    "city": "Mexico City",
+    "country": "Mexico",
+    "capacity": 87523,
+    "image": "azteca_stadium.png",
+    "coordinates": { "lat": 19.3029, "lng": -99.1505 },
+    "gates": [
+      { "name": "Acceso Principal (North)", "status": "Low Crowd", "waitTime": "6 mins", "accessible": true },
+      { "name": "Acceso Sur (South)", "status": "Moderate Crowd", "waitTime": "10 mins", "accessible": true },
+      { "name": "Acceso Oriente (East)", "status": "Low Crowd", "waitTime": "3 mins", "accessible": true }
+    ],
+    "zones": [
+      { "section": "Platea Baja", "gates": ["North"], "restrooms": ["PB-01", "PB-08"], "firstAid": "Zona Oriente" },
+      { "section": "Preferente Alta", "gates": ["South"], "restrooms": ["PA-04", "PA-12"], "firstAid": "Zona Poniente" }
+    ],
+    "services": {
+      "wifi": "FIFA2026_Azteca_RedLibre",
+      "sensoryRooms": ["Nivel 2 Zona VIP"],
+      "wheelchairLifts": ["Rampas 1 y 4"]
+    }
+  },
+  {
+    "id": "sofi",
+    "name": "SoFi Stadium",
+    "city": "Los Angeles",
+    "country": "USA",
+    "capacity": 70240,
+    "image": "sofi_stadium.png",
+    "coordinates": { "lat": 33.9535, "lng": -118.339 },
+    "gates": [
+      { "name": "American Airlines Plaza", "status": "Low Crowd", "waitTime": "5 mins", "accessible": true },
+      { "name": "YouTube Theater Gate", "status": "Low Crowd", "waitTime": "3 mins", "accessible": true }
+    ],
+    "zones": [
+      { "section": "Level 1 Concourse", "gates": ["Plaza"], "restrooms": ["C101", "C120"], "firstAid": "Suite Level 2" }
+    ],
+    "services": {
+      "wifi": "FIFA2026_SoFi_5G",
+      "sensoryRooms": ["Level 3 South"],
+      "wheelchairLifts": ["Escalators & Lifts Tower 1-4"]
+    }
+  },
+  {
+    "id": "bcplace",
+    "name": "BC Place Stadium",
+    "city": "Vancouver",
+    "country": "Canada",
+    "capacity": 54500,
+    "image": "bcplace_stadium.png",
+    "coordinates": { "lat": 49.2767, "lng": -123.1119 },
+    "gates": [
+      { "name": "Gate A (Robson St)", "status": "Low Crowd", "waitTime": "4 mins", "accessible": true },
+      { "name": "Gate E (Terry Fox Plaza)", "status": "Moderate Crowd", "waitTime": "8 mins", "accessible": true }
+    ],
+    "zones": [
+      { "section": "Main Concourse 200", "gates": ["Gate A", "Gate E"], "restrooms": ["204", "232"], "firstAid": "Section 217" }
+    ],
+    "services": {
+      "wifi": "FIFA2026_BCPlace_Guest",
+      "sensoryRooms": ["Section 220 Lounge"],
+      "wheelchairLifts": ["Ramp & Elevators Gate A"]
+    }
+  }
+]

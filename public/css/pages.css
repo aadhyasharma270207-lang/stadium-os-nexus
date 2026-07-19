@@ -1,0 +1,530 @@
+/* ==========================================================================
+   FIFA World Cup 2026 Smart Stadium Assistant - Pages Stylesheet
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   PAGE 1: HOMEPAGE
+   -------------------------------------------------------------------------- */
+.hero-banner {
+  padding: 42px 36px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -15%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, var(--accent-emerald-glow) 0%, rgba(0, 229, 255, 0.1) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: 2.85rem;
+  font-weight: 900;
+  margin-bottom: 14px;
+}
+
+.hero-subtitle {
+  font-size: 1.08rem;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  max-width: 600px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Match Ticker Bar */
+.match-ticker-card {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-left: 4px solid var(--accent-emerald);
+}
+
+.match-teams-display {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.team-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.score-badge {
+  background: var(--bg-tertiary);
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.4rem;
+  color: var(--accent-gold);
+  border: 1px solid var(--glass-border);
+}
+
+/* Quick Hub Grid */
+.quick-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 22px;
+  margin-top: 24px;
+}
+
+.hub-card {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.hub-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-fifa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  color: #000000;
+  box-shadow: 0 0 20px var(--accent-emerald-glow);
+}
+
+.hub-card h3 {
+  font-size: 1.25rem;
+}
+
+.hub-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Gate Crowd Monitor */
+.gate-monitor-section {
+  margin-top: 36px;
+}
+
+.gate-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.gate-card {
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   PAGE 2: CHATBOT INTERFACE
+   -------------------------------------------------------------------------- */
+.chatbot-container {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: 24px;
+  height: calc(100vh - 200px);
+  min-height: 580px;
+}
+
+.chat-sidebar {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ai-assistant-profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ai-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--gradient-fifa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 0 20px var(--accent-emerald-glow);
+}
+
+.chat-main-window {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-messages-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.chat-message-bubble {
+  max-width: 82%;
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.96rem;
+  line-height: 1.55;
+  animation: fadeIn 0.3s ease;
+}
+
+.chat-message-bubble.bot {
+  background: var(--bg-tertiary);
+  border-bottom-left-radius: 4px;
+  border: 1px solid var(--glass-border);
+  align-self: flex-start;
+}
+
+.chat-message-bubble.user {
+  background: var(--gradient-fifa);
+  color: #000000;
+  font-weight: 700;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.chat-input-bar {
+  padding: 18px 24px;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.chat-input-field {
+  flex: 1;
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  padding: 14px 20px;
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-size: 0.98rem;
+}
+
+.chat-input-field:focus {
+  border-color: var(--accent-emerald);
+  outline: none;
+}
+
+.chat-quick-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px 28px 0;
+}
+
+.chip-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  padding: 7px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid var(--glass-border);
+  transition: all var(--transition-fast);
+}
+
+.chip-btn:hover {
+  color: var(--accent-emerald);
+  border-color: var(--accent-emerald);
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   PAGE 3: STADIUM NAVIGATION PAGE
+   -------------------------------------------------------------------------- */
+.nav-page-grid {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 28px;
+}
+
+.map-viewport-card {
+  padding: 28px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stadium-map-canvas-wrap {
+  width: 100%;
+  height: 490px;
+  background: #040812;
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Seat Finder Form */
+.seat-finder-box {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.form-select, .form-input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.94rem;
+}
+
+.form-select:focus, .form-input:focus {
+  border-color: var(--accent-emerald);
+  outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   PAGE 4: STADIUM SERVICES & ORDERING
+   -------------------------------------------------------------------------- */
+.services-tab-bar {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 14px;
+}
+
+.services-tab-btn {
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.services-tab-btn.active {
+  background: var(--accent-emerald);
+  color: #000000;
+  font-weight: 800;
+  box-shadow: 0 0 20px var(--accent-emerald-glow);
+}
+
+.menu-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 22px;
+}
+
+.food-item-card {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.food-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.food-price {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: var(--accent-gold);
+}
+
+.cart-summary-bar {
+  position: fixed;
+  bottom: 84px;
+  right: 28px;
+  z-index: 900;
+}
+
+/* --------------------------------------------------------------------------
+   PAGE 5: EMERGENCY & SAFETY PAGE
+   -------------------------------------------------------------------------- */
+.emergency-hero-card {
+  text-align: center;
+  padding: 44px 28px;
+  border: 2px solid rgba(255, 42, 95, 0.45);
+  background: radial-gradient(circle at center, rgba(255, 42, 95, 0.15) 0%, var(--bg-secondary) 80%);
+  margin-bottom: 32px;
+}
+
+.giant-sos-button {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff2a5f 0%, #d50000 100%);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 2.4rem;
+  box-shadow: 0 0 50px var(--accent-danger-glow);
+  margin: 24px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulseBigSOS 1.8s infinite;
+  border: 5px solid rgba(255, 255, 255, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.giant-sos-button:hover {
+  transform: scale(1.08);
+}
+
+@keyframes pulseBigSOS {
+  0% { box-shadow: 0 0 0 0 rgba(255, 42, 95, 0.8); }
+  70% { box-shadow: 0 0 0 32px rgba(255, 42, 95, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 42, 95, 0); }
+}
+
+.emergency-contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 22px;
+}
+
+.emergency-contact-card {
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.emergency-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 42, 95, 0.2);
+  color: var(--accent-danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+/* --------------------------------------------------------------------------
+   PAGE 6: ACCESSIBILITY PAGE
+   -------------------------------------------------------------------------- */
+.a11y-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 22px;
+}
+
+.a11y-card {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.toggle-switch-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.switch-input {
+  width: 52px;
+  height: 28px;
+  appearance: none;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+.switch-input::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  background: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.switch-input:checked {
+  background: var(--accent-emerald);
+}
+
+.switch-input:checked::before {
+  transform: translateX(24px);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .chatbot-container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .chat-sidebar {
+    display: none;
+  }
+  .nav-page-grid {
+    grid-template-columns: 1fr;
+  }
+}

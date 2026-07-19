@@ -1,0 +1,141 @@
+{
+  "food": [
+    {
+      "id": "f1",
+      "name": "World Cup Champion Burger",
+      "category": "Mains",
+      "price": 14.99,
+      "description": "Double Angus beef patty, smoked cheddar, stadium sauce, brioche bun",
+      "image": "burger.png",
+      "prepTime": "4 mins",
+      "calories": "780 kcal",
+      "section": "104",
+      "waitTimeMins": 4,
+      "crowdLevel": "LOW",
+      "isVegetarian": false,
+      "isVegan": false,
+      "isGlutenFree": false,
+      "isNutFree": true,
+      "isKidFriendly": true
+    },
+    {
+      "id": "f2",
+      "name": "Azteca Gourmet Tacos (3x)",
+      "category": "Mains",
+      "price": 12.50,
+      "description": "Choice of Birria or Grilled Chicken, fresh salsa verde, handmade corn tortillas",
+      "image": "tacos.png",
+      "prepTime": "5 mins",
+      "calories": "560 kcal",
+      "section": "118",
+      "waitTimeMins": 5,
+      "crowdLevel": "MODERATE",
+      "isVegetarian": false,
+      "isVegan": false,
+      "isGlutenFree": true,
+      "isNutFree": true,
+      "isKidFriendly": true
+    },
+    {
+      "id": "f3",
+      "name": "Golden Boot Loaded Fries",
+      "category": "Sides",
+      "price": 8.99,
+      "description": "Crispy crinkle-cut fries, warm queso, jalapeños, scallions",
+      "image": "fries.png",
+      "prepTime": "3 mins",
+      "calories": "620 kcal",
+      "section": "210",
+      "waitTimeMins": 3,
+      "crowdLevel": "LOW",
+      "isVegetarian": true,
+      "isVegan": false,
+      "isGlutenFree": true,
+      "isNutFree": true,
+      "isKidFriendly": true
+    },
+    {
+      "id": "f4",
+      "name": "Green Pitch Vegan Power Bowl",
+      "category": "Mains",
+      "price": 11.50,
+      "description": "Quinoa, avocado, roasted chickpeas, kale, lemon-tahini dressing",
+      "image": "salad.png",
+      "prepTime": "2 mins",
+      "calories": "440 kcal",
+      "section": "112",
+      "waitTimeMins": 2,
+      "crowdLevel": "LOW",
+      "isVegetarian": true,
+      "isVegan": true,
+      "isGlutenFree": true,
+      "isNutFree": true,
+      "isKidFriendly": false
+    },
+    {
+      "id": "f5",
+      "name": "Junior Champion Kid Combo",
+      "category": "Kids",
+      "price": 7.99,
+      "description": "Mini chicken tenders, apple slices, juice box & collector World Cup sticker",
+      "image": "kids.png",
+      "prepTime": "2 mins",
+      "calories": "410 kcal",
+      "section": "104",
+      "waitTimeMins": 2,
+      "crowdLevel": "LOW",
+      "isVegetarian": false,
+      "isVegan": false,
+      "isGlutenFree": false,
+      "isNutFree": true,
+      "isKidFriendly": true
+    },
+    {
+      "id": "f6",
+      "name": "Official FIFA 2026 Collector Beverage",
+      "category": "Drinks",
+      "price": 6.50,
+      "description": "Fountain drink in a souvenir reusable FIFA World Cup 2026 cup",
+      "image": "drink.png",
+      "prepTime": "1 min",
+      "calories": "180 kcal",
+      "section": "204",
+      "waitTimeMins": 1,
+      "crowdLevel": "LOW",
+      "isVegetarian": true,
+      "isVegan": true,
+      "isGlutenFree": true,
+      "isNutFree": true,
+      "isKidFriendly": true
+    }
+  ],
+  "merchandise": [
+    {
+      "id": "m1",
+      "name": "FIFA World Cup 2026 Official Jersey",
+      "price": 110.00,
+      "description": "Authentic breath-mesh Match Day Jersey with 2026 Host Nations crest",
+      "rating": 4.9
+    },
+    {
+      "id": "m2",
+      "name": "Adidas 2026 Official Match Ball",
+      "price": 165.00,
+      "description": "FIFA Quality Pro certified thermobonded official match ball",
+      "rating": 5.0
+    },
+    {
+      "id": "m3",
+      "name": "World Cup 2026 Commemorative Scarf",
+      "price": 32.00,
+      "description": "Knit fan scarf featuring USA, Mexico, and Canada host city designs",
+      "rating": 4.8
+    }
+  ],
+  "restrooms": [
+    { "location": "Section 104 (Lower Concourse)", "status": "Low Line", "waitTime": "2 mins", "type": "Gender-Neutral & Accessible" },
+    { "location": "Section 118 (Lower Concourse)", "status": "Moderate", "waitTime": "6 mins", "type": "Standard & Accessible" },
+    { "location": "Section 210 (Club Level)", "status": "Low Line", "waitTime": "1 min", "type": "VIP Accessible" },
+    { "location": "Section 322 (Upper Deck)", "status": "Busy", "waitTime": "9 mins", "type": "Standard" }
+  ]
+}
