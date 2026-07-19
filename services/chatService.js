@@ -1,6 +1,6 @@
 /**
  * Chat Service - FIFA World Cup 2026 (Multilingual AI-First Architecture)
- * Powered by Google Gemini AI with Automatic Language Detection,
+ * Powered by Google Gemini 2.5 Flash AI with Automatic Language Detection,
  * Active Conversation Session Reuse, Multi-Signal Context Injection,
  * Intent / Urgency / Frustration / Accessibility / Family Detection,
  * and Zero-Hallucination Ground-Truth Protection.
@@ -64,7 +64,7 @@ INTERNAL REASONING & MULTI-SIGNAL DIRECTIVES:
   }
 
   /**
-   * Process user query using Gemini AI as Primary Engine with Conversation Reuse
+   * Process user query using Gemini 2.5 Flash AI as Primary Engine with Conversation Reuse
    */
   async processQuery(message, history = [], stadiumId = 'metlife', userProfile = {}, sessionId = 'default-session') {
     const cleanMsg = (message || '').trim();
@@ -86,14 +86,14 @@ INTERNAL REASONING & MULTI-SIGNAL DIRECTIVES:
       };
     }
 
-    // 1. PRIMARY ENGINE: Google Gemini AI
+    // 1. PRIMARY ENGINE: Google Gemini 2.5 Flash AI
     const aiResponse = await this.callGeminiAI(cleanMsg, history, stadiumContext, userProfile, sessionId);
     if (aiResponse) {
       const sanitized = sanitizeHtml(aiResponse).replace(/&amp;/g, '&');
       defaultCache.set(cacheKey, sanitized, 30000); // 30s TTL cache
       return {
         reply: sanitized,
-        engine: 'gemini-1.5-flash-session-reused',
+        engine: 'gemini-2.5-flash-session-reused',
         suggestions: ["Bypass Gate C Bottleneck", "Nearest Concession to My Seat", "First Aid Locations", "Translate PA Announcement"]
       };
     }
@@ -106,7 +106,7 @@ INTERNAL REASONING & MULTI-SIGNAL DIRECTIVES:
   }
 
   /**
-   * Call Gemini AI with Session Reuse & Multi-Signal Prompt
+   * Call Gemini 2.5 Flash AI with Session Reuse & Multi-Signal Prompt
    */
   async callGeminiAI(message, history, stadiumContext, userProfile, sessionId) {
     const apiKey = process.env.GEMINI_API_KEY;
@@ -126,7 +126,7 @@ INTERNAL REASONING & MULTI-SIGNAL DIRECTIVES:
         existing.lastAccess = Date.now();
       } else {
         const model = genAI.getGenerativeModel({
-          model: 'gemini-1.5-flash',
+          model: 'gemini-2.5-flash',
           systemInstruction
         });
 
@@ -234,7 +234,7 @@ INTERNAL REASONING & MULTI-SIGNAL DIRECTIVES:
 
     // 10. General Matchday Response
     return {
-      reply: `⚽ **Goalie AI Smart Assistant (${stadiumContext}):**\n\nI am your FIFA World Cup 2026 matchday assistant. How can I assist you with intelligent navigation, personalized food options, weather advisories, emergency help, or accessibility services?`,
+      reply: `⚽ **Goalie AI Smart Assistant (${stadiumContext}):**\n\nI am your FIFA World Cup 2026 matchday assistant powered by Gemini 2.5 Flash. How can I assist you with intelligent navigation, personalized food options, weather advisories, emergency help, or accessibility services?`,
       engine: 'offline-fallback'
     };
   }

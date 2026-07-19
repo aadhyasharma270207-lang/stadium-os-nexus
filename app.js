@@ -2,8 +2,9 @@
  * app.js
  * 
  * Main bootstrap entry point for the FIFA World Cup 2026 Smart Stadium Assistant.
- * Configures static assets caching, security headers, limits body sizes, mounts
- * modular routing controllers, and boots the Express.js server.
+ * Configures static assets caching, security headers, explicit root route serving,
+ * limits body sizes, mounts modular routing controllers, and boots the Express.js server
+ * with dual-stack 0.0.0.0 host binding and EADDRINUSE resilience.
  */
 
 const express = require("express");
@@ -11,7 +12,7 @@ const path = require("path");
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 
 // 1. Security Header Adjustments & Size Limits
 app.disable("x-powered-by");
@@ -27,12 +28,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// 2. Static Asset Delivery with Cache Control (86400 secs = 24 hours caching)
+// 2. Explicit Root Route Handler (Guarantees index.html delivery)
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// 3. Static Asset Delivery with Cache Control (86400 secs = 24 hours caching)
 app.use(express.static(path.join(__dirname, "public"), {
   maxAge: "1d"
 }));
 
-// 3. Mount Modular Express Routers
+// 4. Mount Modular Express Routers
 const apiRouter = require("./routes/api");
 const chatRoutes = require("./routes/chatRoutes");
 const crowdRoutes = require("./routes/crowdRoutes");
@@ -57,7 +63,7 @@ app.use("/api/stadium-data", telemetryRouter);
 app.use("/api/legacy-chat", legacyChatRouter);
 app.use("/api/translate", translateRouter);
 
-// 4. 404 Fallback Middleware (Secure JSON response)
+// 5. 404 Fallback Middleware (Secure JSON response)
 app.use((req, res, next) => {
   return res.status(404).json({
     success: false,
@@ -65,7 +71,7 @@ app.use((req, res, next) => {
   });
 });
 
-// 5. Centered Error Handling Middleware
+// 6. Centered Error Handling Middleware
 app.use((err, req, res, next) => {
   console.error("💥 Uncaught Express Exception:", err.stack);
   return res.status(500).json({
@@ -74,15 +80,32 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 6. Server listener startup (only listen if not imported by tests)
-if (require.main === module) {
-  app.listen(PORT, () => {
+/**
+ * Start Express Server with 0.0.0.0 Binding & EADDRINUSE Retries
+ */
+function startServer(port) {
+  const server = app.listen(port, "0.0.0.0", () => {
     console.log(`====================================================`);
-    console.log(`🏟️ Smart Stadium Assistant running on port ${PORT}`);
-    console.log(`🌎 Mode: Development`);
-    console.log(`🔗 Local Address: http://localhost:${PORT}`);
+    console.log(`🏟️ Smart Stadium Assistant running on port ${port}`);
+    console.log(`🌎 Mode: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🔗 Local IPv4 Address: http://127.0.0.1:${port}`);
+    console.log(`🔗 Local Hostname:     http://localhost:${port}`);
     console.log(`====================================================`);
   });
+
+  server.on("error", (err) => {
+    if (err.code === "EADDRINUSE") {
+      console.warn(`⚠️ Port ${port} is in use. Attempting port ${port + 1}...`);
+      startServer(port + 1);
+    } else {
+      console.error("💥 Server Startup Error:", err);
+    }
+  });
+}
+
+// 7. Server listener startup (only listen if not imported by tests)
+if (require.main === module) {
+  startServer(DEFAULT_PORT);
 }
 
 module.exports = app;

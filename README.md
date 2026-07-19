@@ -2,11 +2,11 @@
 
 [![Node.js](https://img.shields.io/badge/Node.js-v18%2B-green.svg)](https://nodejs.org/)
 [![Express.js](https://img.shields.io/badge/Express.js-v4.19-blue.svg)](https://expressjs.com/)
-[![Google Gemini AI](https://img.shields.io/badge/Google_Gemini-1.5_Flash-purple.svg)](https://deepmind.google/technologies/gemini/)
+[![Google Gemini AI](https://img.shields.io/badge/Google_Gemini-2.5_Flash-purple.svg)](https://deepmind.google/technologies/gemini/)
 [![W3C WCAG](https://img.shields.io/badge/WCAG-2.1_AA_Compliant-brightgreen.svg)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An enterprise-grade, multi-agent AI platform and real-time telemetry dashboard engineered for football fans attending the FIFA World Cup 2026 at **MetLife Stadium (NY/NJ)**. Built with a modular Node.js/Express architecture, Google Gemini 1.5 Flash AI SDK, 2D HTML5 Pitch Canvas Engine, and W3C WCAG 2.1 AA compliant accessibility controls.
+An enterprise-grade, multi-agent AI platform and real-time telemetry dashboard engineered for football fans attending the FIFA World Cup 2026 at **MetLife Stadium (NY/NJ)**. Built with a modular Node.js/Express architecture, Google Gemini 2.5 Flash AI SDK, 2D HTML5 Pitch Canvas Engine, and W3C WCAG 2.1 AA compliant accessibility controls.
 
 ---
 
@@ -48,7 +48,7 @@ Attending mega-events like the FIFA World Cup poses severe spatial, operational,
                          v
 +-----------------------------------------------------------------------------------+
 |                              GOOGLE GEMINI AI PLATFORM                            |
-|   Model: gemini-1.5-flash (@google/generative-ai)                                |
+|   Model: gemini-2.5-flash (@google/generative-ai)                                |
 |   Multi-Signal System Instruction & Active Conversation Session Memory Reuse      |
 |   Hidden Step-by-Step Reasoning & Contextual "WHY" Rationale Enforcement         |
 +-----------------------------------------------------------------------------------+
@@ -76,7 +76,7 @@ Attending mega-events like the FIFA World Cup poses severe spatial, operational,
 ## 💻 4. Technologies
 
 - **Core & Runtime**: Node.js (v18+), Express.js (v4.19)
-- **AI & LLM**: Google Gemini AI SDK (`@google/generative-ai`, `gemini-1.5-flash`)
+- **AI & LLM**: Google Gemini AI SDK (`@google/generative-ai`, `gemini-2.5-flash`)
 - **Frontend**: Semantic HTML5, Vanilla CSS Design System (Custom Glassmorphism, CSS Custom Tokens), ES6 JavaScript
 - **Graphics & Visualization**: HTML5 Canvas 2D Pitch Engine, Vector SVG Seating Plan Map
 - **Accessibility (A11y)**: W3C WCAG 2.1 AA Standards, Web Speech API (TTS Text-to-Speech Engine), ARIA Live Announcer
@@ -129,7 +129,7 @@ Navigate to [http://localhost:3000](http://localhost:3000) in your web browser.
 | Variable Name | Required | Default Value | Description |
 | :--- | :---: | :---: | :--- |
 | `PORT` | Optional | `3000` | Port number on which the Express server listens. |
-| `GEMINI_API_KEY` | Optional | `""` | Google Generative AI API key for Gemini 1.5 Flash. |
+| `GEMINI_API_KEY` | Optional | `""` | Google Generative AI API key for Gemini 2.5 Flash. |
 | `NODE_ENV` | Optional | `"development"` | Application environment (`development` or `production`). |
 
 ---
@@ -197,7 +197,7 @@ CMD ["node", "app.js"]
 
 ## 🎯 10. Prompt Engineering Strategy
 
-The Smart Stadium Assistant utilizes an advanced multi-signal prompt engineering strategy engineered specifically for Google Gemini 1.5 Flash:
+The Smart Stadium Assistant utilizes an advanced multi-signal prompt engineering strategy engineered specifically for Google Gemini 2.5 Flash:
 
 ### 1. Ground-Truth Data Binding
 To prevent hallucinations during high-stress stadium visits, system instructions bind Gemini directly to verified stadium telemetry (gate names, wait times, exact food pricing, section numbers, emergency phone extensions `Ext 911-MED` / `Ext 911-SEC` / `Ext 404-LOST`).
