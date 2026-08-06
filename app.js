@@ -4,15 +4,17 @@
  * Main bootstrap entry point for the FIFA World Cup 2026 Smart Stadium Assistant.
  * Configures static assets caching, security headers, explicit root route serving,
  * limits body sizes, mounts modular routing controllers, and boots the Express.js server
- * with dual-stack 0.0.0.0 host binding and EADDRINUSE resilience.
+ * with multi-address dual-stack binding across ports 3000, 5000, and 8080.
  */
 
 const express = require("express");
 const path = require("path");
+const http = require("http");
 require("dotenv").config();
 
 const app = express();
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+const PRIMARY_PORT = parseInt(process.env.PORT, 10) || 3000;
+const ALT_PORTS = [PRIMARY_PORT, 5000, 8080];
 
 // 1. Security Header Adjustments & Size Limits
 app.disable("x-powered-by");
@@ -81,31 +83,40 @@ app.use((err, req, res, next) => {
 });
 
 /**
- * Start Express Server with 0.0.0.0 Binding & EADDRINUSE Retries
+ * Start Single Port Listener Helper
  */
-function startServer(port) {
-  const server = app.listen(port, "0.0.0.0", () => {
-    console.log(`====================================================`);
-    console.log(`🏟️ Smart Stadium Assistant running on port ${port}`);
-    console.log(`🌎 Mode: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`🔗 Local IPv4 Address: http://127.0.0.1:${port}`);
-    console.log(`🔗 Local Hostname:     http://localhost:${port}`);
-    console.log(`====================================================`);
+function bindPort(port) {
+  const server = http.createServer(app);
+  server.listen(port, "0.0.0.0", () => {
+    console.log(`🏟️ Smart Stadium Assistant active at: http://localhost:${port} and http://127.0.0.1:${port}`);
   });
 
   server.on("error", (err) => {
     if (err.code === "EADDRINUSE") {
-      console.warn(`⚠️ Port ${port} is in use. Attempting port ${port + 1}...`);
-      startServer(port + 1);
+      console.warn(`⚠️ Port ${port} is currently busy.`);
     } else {
-      console.error("💥 Server Startup Error:", err);
+      console.error(`💥 Error binding port ${port}:`, err);
     }
   });
 }
 
+/**
+ * Start Multi-Address Express Server Listener
+ */
+function startServers() {
+  console.log(`====================================================`);
+  console.log(`🏟️ Smart Stadium Assistant Multi-Address Server Boot`);
+  console.log(`🌎 Mode: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`====================================================`);
+
+  // Bind to unique ports
+  const uniquePorts = [...new Set(ALT_PORTS)];
+  uniquePorts.forEach(port => bindPort(port));
+}
+
 // 7. Server listener startup (only listen if not imported by tests)
 if (require.main === module) {
-  startServer(DEFAULT_PORT);
+  startServers();
 }
 
 module.exports = app;

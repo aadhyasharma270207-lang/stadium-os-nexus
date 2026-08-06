@@ -158,7 +158,29 @@ const Accessibility = {
       <ul style="padding-left: 18px; font-size: 0.85rem; color: var(--text-secondary);">
         ${tipsHtml}
       </ul>
+
+      <div style="margin-top: 14px; padding: 10px; background: rgba(0, 229, 255, 0.08); border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 0.82rem; color: var(--accent-cyan); font-weight: 600;">🎧 Audio-Described Match Commentary Stream:</span>
+        <button type="button" id="btn-play-audio-stream" style="background: var(--accent-cyan); color: #000; font-weight: 800; border: none; padding: 6px 12px; border-radius: 4px; font-size: 0.78rem; cursor: pointer;">🔊 Play Commentary</button>
+      </div>
     `;
+
+    const playAudioBtn = document.getElementById('btn-play-audio-stream');
+    if (playAudioBtn) {
+      playAudioBtn.addEventListener('click', () => {
+        const commentaryText = "Live FIFA World Cup 2026 Commentary. Minute 74. Team USA is pressing up the right flank with rapid ball movement into the penalty box. Attendance at MetLife Stadium is at maximum capacity.";
+        if ('speechSynthesis' in window) {
+          const synth = window.speechSynthesis;
+          synth.cancel();
+          const utterance = new SpeechSynthesisUtterance(commentaryText);
+          utterance.rate = 1.0;
+          synth.speak(utterance);
+          this.announceScreenReader("Playing live audio-described match commentary stream.");
+        } else {
+          alert("Audio commentary: " + commentaryText);
+        }
+      });
+    }
 
     this.announceScreenReader(`AI Accessibility Plan generated for ${data.profile}. Recommended route loaded.`);
   },

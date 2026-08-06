@@ -2285,3 +2285,144 @@ body.high-contrast .ai-advice-card {
 body.high-contrast .lost-item-card {
   border: 1px solid #ffffff !important;
 }
+
+/* ==========================================================================
+   23. Advanced Visual Polish & Enhanced Interactive Styles
+   ========================================================================== */
+
+/* Shimmering Animated Gradient Hero & Section Titles */
+.gradient-shimmer-title {
+  background: linear-gradient(135deg, #ffffff 0%, #00df82 40%, #00f0ff 70%, #d4af37 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerGradient 6s ease infinite;
+}
+
+@keyframes shimmerGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Live Scoreboard Banner Header Widget */
+.live-match-ticker-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(0, 223, 130, 0.15), rgba(0, 240, 255, 0.15));
+  border: 1px solid rgba(0, 223, 130, 0.3);
+  padding: 10px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 223, 130, 0.15);
+}
+
+.ticker-teams {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.score-badge {
+  background: #00df82;
+  color: #040812;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* Pulsating Live Beacons */
+.pulsating-beacon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00df82;
+  box-shadow: 0 0 0 0 rgba(0, 223, 130, 0.7);
+  animation: pulseBeacon 1.8s infinite;
+  margin-right: 6px;
+}
+
+@keyframes pulseBeacon {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 223, 130, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(0, 223, 130, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 223, 130, 0);
+  }
+}
+
+/* Interactive Canvas Mode Selector Pills */
+.canvas-mode-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.canvas-mode-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.canvas-mode-btn:hover,
+.canvas-mode-btn.active {
+  background: var(--accent-green);
+  color: #040812;
+  border-color: var(--accent-green);
+}
+
+/* Toast Copy Notification */
+.toast-notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #00df82;
+  color: #040812;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 223, 130, 0.4);
+  z-index: 99999;
+  animation: slideInUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Audio Player Controls Box */
+.audio-stream-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--accent-cyan);
+  padding: 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}

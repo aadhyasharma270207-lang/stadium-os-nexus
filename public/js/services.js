@@ -153,11 +153,28 @@ const Services = {
           <h3 style="font-size: 1.1rem; color: var(--accent-cyan);">
             📅 Complete Matchday Visit Plan (Section ${data.section})
           </h3>
-          <span class="status-pill low">${data.crowdTimeSaved}</span>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span class="status-pill low">${data.crowdTimeSaved}</span>
+            <button type="button" id="btn-copy-itinerary" style="background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">📋 Copy Plan</button>
+          </div>
         </div>
         ${timelineHtml}
       </div>
     `;
+
+    const copyBtn = document.getElementById('btn-copy-itinerary');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        const textToCopy = `FIFA 2026 Matchday Itinerary (Section ${data.section}):\n` + (data.timeline || []).map(t => `${t.timeOffset}: ${t.title} - ${t.detail}`).join('\n');
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          if (window.Navigation && window.Navigation.showToast) {
+            window.Navigation.showToast('📋 Matchday Itinerary copied to clipboard!');
+          } else {
+            alert('📋 Matchday Itinerary copied to clipboard!');
+          }
+        });
+      });
+    }
 
     if (window.Accessibility) {
       window.Accessibility.announceScreenReader(`Generated complete matchday itinerary for Section ${data.section}. Saved ${data.crowdTimeSaved}.`);

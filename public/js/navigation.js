@@ -111,15 +111,36 @@ const Navigation = {
       <div class="glass-card" style="padding: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
           <h4 style="font-size: 1.05rem;"><i class="fas fa-route" style="color: var(--accent-emerald);"></i> Smart Route to Section ${routeData.section}</h4>
-          <span class="status-pill low">${routeData.walkingTimeMins} (${routeData.distanceMeters})</span>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span class="status-pill low">${routeData.walkingTimeMins} (${routeData.distanceMeters})</span>
+            <button type="button" id="btn-copy-route" style="background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">📋 Copy</button>
+          </div>
         </div>
         ${stepsHtml}
       </div>
     `;
 
+    const copyBtn = document.getElementById('btn-copy-route');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        const textToCopy = `FIFA 2026 Smart Route (Section ${routeData.section}):\n` + (routeData.routeSteps || []).join('\n');
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          this.showToast('📋 Smart Route copied to clipboard!');
+        });
+      });
+    }
+
     if (window.Accessibility) {
       window.Accessibility.announceScreenReader(`Smart Route calculated to Section ${routeData.section}. Walking time: ${routeData.walkingTimeMins}`);
     }
+  },
+
+  showToast(msg) {
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
   },
 
   renderAiExplanation(explanationText) {
