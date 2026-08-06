@@ -353,7 +353,7 @@ async function triggerChatMessageSubmit() {
   try {
     const response = await API.sendChatMessage(query);
     loaderBubble.remove();
-    UI.appendChatMessage("system", response.reply);
+    UI.appendChatMessage("system", response.reply, response.engine);
   } catch (error) {
     loaderBubble.remove();
     UI.appendChatMessage("system", "I apologize, but I am having trouble connecting to the stadium core server right now. Please check your internet connection.");

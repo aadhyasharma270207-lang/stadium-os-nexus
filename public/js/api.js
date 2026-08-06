@@ -53,7 +53,8 @@ const API = {
       const payload = await response.json();
       return {
         reply: payload.reply,
-        source: payload.source
+        source: payload.source,
+        engine: payload.engine
       };
     } catch (error) {
       console.error("❌ API.sendChatMessage failed:", error);

@@ -551,17 +551,26 @@ const UI = {
   /**
    * Creates a chat text message bubble inside the log.
    */
-  appendChatMessage(sender, text) {
+  appendChatMessage(sender, text, engine = null) {
     const bubble = document.createElement("div");
     bubble.className = `message ${sender === "user" ? "user-msg" : "system-msg"}`;
     
     const avatar = sender === "user" ? "👤" : "🤖";
-    const displayName = sender === "user" ? "You" : "Smart Stadium Assistant";
+    let displayName = sender === "user" ? "You" : "Smart Stadium Assistant";
+
+    let engineBadge = '';
+    if (sender === "system" && engine) {
+      const isGemini = engine.includes('gemini');
+      const badgeBg = isGemini ? 'rgba(0, 240, 255, 0.15)' : 'rgba(255, 159, 10, 0.15)';
+      const badgeColor = isGemini ? '#00f0ff' : '#ff9f0a';
+      const label = isGemini ? '🤖 Gemini 2.5' : '⚡ Local Fallback';
+      engineBadge = `<span style="font-size: 0.72rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 8px; background: ${badgeBg}; color: ${badgeColor}; border: 1px solid ${badgeColor};">${label}</span>`;
+    }
 
     bubble.innerHTML = `
       <span class="avatar" aria-hidden="true">${avatar}</span>
       <div class="message-content">
-        <strong>${displayName}</strong>
+        <strong>${displayName}</strong>${engineBadge}
         <p>${text}</p>
       </div>
     `;
